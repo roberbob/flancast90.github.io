@@ -159,6 +159,8 @@ Error message and password prompt
 
 <li>$:/core/ui/Buttons/advanced-search</li>
 
+<li>$:/core/ui/SideBarSegments/search</li>
+
 <li>$:/DefaultTiddlers</li>
 
 <li>$:/GitHub/Branch</li>
@@ -178,6 +180,8 @@ Error message and password prompt
 <li>$:/SiteTitle</li>
 
 <li>$:/state/plugin-info-334910430-$:/core---1812962263</li>
+
+<li>$:/state/sidebar</li>
 
 <li>$:/state/tab--1963855381</li>
 
@@ -223,7 +227,7 @@ Error message and password prompt
 <!--~~ Ordinary tiddlers ~~-->
 
 <div id="storeArea" style="display:none;">
-<div color="#bbb" created="20210121184151687" icon="$:/core/images/advanced-search-button" modified="20210121184154089" title="$:/AdvancedSearch">
+<div color="#bbb" created="20210121184135151" icon="$:/core/images/advanced-search-button" modified="20210121184136689" title="$:/AdvancedSearch">
 <pre></pre>
 </div>
 <div created="20210121182451918" modified="20210121182451918" title="$:/config/EditToolbarButtons/Visibility/$:/core/ui/Buttons/delete">
@@ -10108,7 +10112,7 @@ Error message and password prompt
     }
 }</pre>
 </div>
-<div caption="{{$:/core/images/advanced-search-button}} {{$:/language/Buttons/AdvancedSearch/Caption}}" created="20210121184341434" description="{{$:/language/Buttons/AdvancedSearch/Hint}}" modified="20210121184343051" tags="" title="$:/core/ui/Buttons/advanced-search">
+<div caption="{{$:/core/images/advanced-search-button}} {{$:/language/Buttons/AdvancedSearch/Caption}}" created="20210121184312544" description="{{$:/language/Buttons/AdvancedSearch/Hint}}" modified="20210121184314419" tags="" title="$:/core/ui/Buttons/advanced-search">
 <pre>\whitespace trim
 \define advanced-search-button(class)
 &lt;$button to=&quot;$:/AdvancedSearch&quot; tooltip={{$:/language/Buttons/AdvancedSearch/Hint}} aria-label={{$:/language/Buttons/AdvancedSearch/Caption}} class=&quot;&quot;&quot;$(tv-config-toolbar-class)$ $class$&quot;&quot;&quot;&gt;
@@ -10126,12 +10130,104 @@ Error message and password prompt
 &lt;/$list&gt;
 </pre>
 </div>
-<div created="20210121183913516" modified="20210121183947107" title="$:/DefaultTiddlers">
+<div created="20210121184502955" modified="20210121184508745" tags="$:/tags/SideBarSegment" title="$:/core/ui/SideBarSegments/search">
+<pre>\whitespace trim
+
+\define count-popup-button()
+\whitespace trim
+&lt;$button popup=&lt;&lt;qualify &quot;$:/state/popup/search-dropdown&quot;&gt;&gt; class=&quot;tc-btn-invisible&quot;&gt;
+{{$:/core/images/down-arrow}}
+&lt;$list filter=&quot;[{$(searchTiddler)$}minlength{$:/config/Search/MinLength}limit[1]]&quot; variable=&quot;listItem&quot;&gt;
+&lt;$vars userInput={{{ [&lt;searchTiddler&gt;get[text]] }}} configTiddler={{{ [[$:/state/search/currentTab]!is[missing]get[text]] ~[{$:/config/SearchResults/Default}] }}} replaceRegexp=&quot;limit\[\d+\]&quot;&gt;
+&lt;$vars primaryListFilter={{{ [&lt;configTiddler&gt;get[first-search-filter]search-replace:g:regexp&lt;replaceRegexp&gt;,[]] }}} secondaryListFilter={{{ [&lt;configTiddler&gt;get[second-search-filter]search-replace:g:regexp&lt;replaceRegexp&gt;,[]] }}}&gt;
+&lt;$set name=&quot;resultCount&quot; value=&quot;&quot;&quot;&lt;$count filter=&quot;[subfilter&lt;primaryListFilter&gt;] [subfilter&lt;secondaryListFilter&gt;]&quot;/&gt;&quot;&quot;&quot;&gt;
+{{$:/language/Search/Matches}}
+&lt;/$set&gt;
+&lt;/$vars&gt;
+&lt;/$vars&gt;
+&lt;/$list&gt;
+&lt;/$button&gt;
+\end
+
+\define search-results-list()
+\whitespace trim
+&lt;$vars userInput={{$(searchTiddler)$}} configTiddler={{{ [[$:/state/search/currentTab]!is[missing]get[text]] ~[{$:/config/SearchResults/Default}] }}}&gt;
+&lt;$list filter=&quot;[&lt;userInput&gt;minlength{$:/config/Search/MinLength}limit[1]]&quot; emptyMessage=&quot;&quot;&quot;&lt;div class=&quot;tc-search-results&quot;&gt;{{$:/language/Search/Search/TooShort}}&lt;/div&gt;&quot;&quot;&quot; variable=&quot;listItem&quot;&gt;
+
+&lt;$tiddler tiddler=&lt;&lt;configTiddler&gt;&gt;&gt;
+
+{{$:/core/ui/SearchResults}}
+
+&lt;/$tiddler&gt;
+
+&lt;/$list&gt;
+&lt;/$vars&gt;
+\end
+
+\define cancel-search-actions() &lt;$list filter=&quot;[&lt;searchTiddler&gt;get[text]!match{$:/temp/search}]&quot; emptyMessage=&quot;&quot;&quot;&lt;$action-deletetiddler $filter=&quot;[[$:/temp/search]] [&lt;searchTiddler&gt;] [&lt;searchListState&gt;]&quot;/&gt;&quot;&quot;&quot;&gt;&lt;$action-setfield $tiddler=&quot;$:/temp/search&quot; text={{{ [&lt;searchTiddler&gt;get[text]] }}}/&gt;&lt;$action-setfield $tiddler=&quot;$:/temp/search/refresh&quot; text=&quot;yes&quot;/&gt;&lt;/$list&gt;
+
+\define input-accept-actions() &lt;$list filter=&quot;[{$:/config/Search/NavigateOnEnter/enable}match[yes]]&quot; emptyMessage=&quot;&quot;&quot;&lt;$list filter=&quot;[&lt;__tiddler__&gt;get[text]!is[missing]] ~[&lt;__tiddler__&gt;get[text]is[shadow]]&quot;&gt;&lt;$action-navigate $to={{{ [&lt;__tiddler__&gt;get[text]] }}}/&gt;&lt;/$list&gt;&quot;&quot;&quot;&gt;&lt;$action-navigate $to={{{ [&lt;__tiddler__&gt;get[text]] }}}/&gt;&lt;/$list&gt;
+
+\define input-accept-variant-actions() &lt;$list filter=&quot;[{$:/config/Search/NavigateOnEnter/enable}match[yes]]&quot; emptyMessage=&quot;&quot;&quot;&lt;$list filter=&quot;[&lt;__tiddler__&gt;get[text]!is[missing]] ~[&lt;__tiddler__&gt;get[text]is[shadow]]&quot;&gt;&lt;$list filter=&quot;[&lt;__tiddler__&gt;get[text]minlength[1]]&quot;&gt;&lt;$action-sendmessage $message=&quot;tm-edit-tiddler&quot; $param={{{  [&lt;__tiddler__&gt;get[text]] }}}/&gt;&lt;/$list&gt;&lt;/$list&gt;&quot;&quot;&quot;&gt;&lt;$list filter=&quot;[&lt;__tiddler__&gt;get[text]minlength[1]]&quot;&gt;&lt;$action-sendmessage $message=&quot;tm-edit-tiddler&quot; $param={{{  [&lt;__tiddler__&gt;get[text]] }}}/&gt;&lt;/$list&gt;&lt;/$list&gt;
+
+\define set-next-input-tab(beforeafter:&quot;after&quot;) &lt;$macrocall $name=&quot;change-input-tab&quot; stateTitle=&quot;$:/state/tab/search-results/sidebar&quot; tag=&quot;$:/tags/SearchResults&quot; beforeafter=&quot;$beforeafter$&quot; defaultState={{$:/config/SearchResults/Default}} actions=&quot;&quot;&quot;&lt;$action-setfield $tiddler=&quot;$:/state/search/currentTab&quot; text=&lt;&lt;nextTab&gt;&gt;/&gt;&quot;&quot;&quot;/&gt;
+
+\define advanced-search-actions() &lt;$action-setfield $tiddler=&quot;$:/temp/advancedsearch&quot; text={{$:/temp/search/input}}/&gt;&lt;$action-setfield $tiddler=&quot;$:/temp/advancedsearch/input&quot; text={{$:/temp/search/input}}/&gt;&lt;&lt;delete-state-tiddlers&gt;&gt;&lt;$action-navigate $to=&quot;$:/AdvancedSearch&quot;/&gt;&lt;$action-setfield $tiddler=&quot;$:/temp/advancedsearch/refresh&quot; text=&quot;yes&quot;/&gt;&lt;$action-sendmessage $message=&quot;tm-focus-selector&quot; $param=&quot;&quot;&quot;[data-tiddler-title=&quot;$:/AdvancedSearch&quot;] .tc-search input&quot;&quot;&quot; preventScroll=&quot;true&quot;/&gt;&lt;$action-deletetiddler $filter=&quot;$:/temp/search $:/temp/search/input $:/temp/search/refresh [&lt;searchListState&gt;]&quot;/&gt;
+
+&lt;div class=&quot;tc-sidebar-lists tc-sidebar-search&quot;&gt;
+
+&lt;$vars editTiddler=&quot;$:/temp/search&quot; searchTiddler=&quot;$:/temp/search/input&quot; searchListState=&lt;&lt;qualify &quot;$:/state/search-list/selected-item&quot;&gt;&gt;&gt;
+&lt;div class=&quot;tc-search&quot;&gt;
+&lt;$keyboard key=&quot;((input-tab-right))&quot; actions=&lt;&lt;set-next-input-tab&gt;&gt;&gt;
+&lt;$keyboard key=&quot;((input-tab-left))&quot; actions=&lt;&lt;set-next-input-tab &quot;before&quot;&gt;&gt;&gt;
+&lt;$keyboard key=&quot;((advanced-search-sidebar))&quot; actions=&lt;&lt;advanced-search-actions&gt;&gt;&gt;
+&lt;$macrocall $name=&quot;keyboard-driven-input&quot; tiddler=&lt;&lt;editTiddler&gt;&gt; storeTitle=&lt;&lt;searchTiddler&gt;&gt; 
+		selectionStateTitle=&lt;&lt;searchListState&gt;&gt; refreshTitle=&quot;$:/temp/search/refresh&quot; type=&quot;search&quot; 
+		tag=&quot;input&quot; focus={{$:/config/Search/AutoFocus}} focusPopup=&lt;&lt;qualify &quot;$:/state/popup/search-dropdown&quot;&gt;&gt; 
+		class=&quot;tc-popup-handle&quot; filterMinLength={{$:/config/Search/MinLength}} inputCancelActions=&lt;&lt;cancel-search-actions&gt;&gt; 
+		inputAcceptActions=&lt;&lt;input-accept-actions&gt;&gt; inputAcceptVariantActions=&lt;&lt;input-accept-variant-actions&gt;&gt; cancelPopups=&quot;yes&quot; 
+		configTiddlerFilter=&quot;[[$:/state/search/currentTab]!is[missing]get[text]] ~[{$:/config/SearchResults/Default}]&quot;/&gt;
+&lt;/$keyboard&gt;
+&lt;/$keyboard&gt;
+&lt;/$keyboard&gt;
+&lt;$reveal state=&lt;&lt;searchTiddler&gt;&gt; type=&quot;nomatch&quot; text=&quot;&quot;&gt;
+&lt;$button tooltip={{$:/language/Buttons/AdvancedSearch/Hint}} aria-label={{$:/language/Buttons/AdvancedSearch/Caption}} class=&quot;tc-btn-invisible&quot;&gt;
+&lt;&lt;advanced-search-actions&gt;&gt;
+{{$:/core/images/advanced-search-button}}
+&lt;/$button&gt;
+&lt;$button class=&quot;tc-btn-invisible&quot;&gt;
+&lt;&lt;cancel-search-actions&gt;&gt;&lt;$action-sendmessage $message=&quot;tm-focus-selector&quot; $param=&quot;.tc-search input&quot;/&gt;
+{{$:/core/images/close-button}}
+&lt;/$button&gt;
+&lt;&lt;count-popup-button&gt;&gt;
+&lt;/$reveal&gt;
+&lt;$reveal state=&lt;&lt;searchTiddler&gt;&gt; type=&quot;match&quot; text=&quot;&quot;&gt;
+
+&lt;/$reveal&gt;
+&lt;/div&gt;
+
+&lt;$reveal tag=&quot;div&quot; class=&quot;tc-block-dropdown-wrapper&quot; state=&lt;&lt;searchTiddler&gt;&gt; type=&quot;nomatch&quot; text=&quot;&quot;&gt;
+
+&lt;$reveal tag=&quot;div&quot; class=&quot;tc-block-dropdown tc-search-drop-down tc-popup-handle&quot; state=&lt;&lt;qualify &quot;$:/state/popup/search-dropdown&quot;&gt;&gt; type=&quot;nomatch&quot; text=&quot;&quot; default=&quot;&quot;&gt;
+
+&lt;&lt;search-results-list&gt;&gt;
+
+&lt;/$reveal&gt;
+
+&lt;/$reveal&gt;
+
+&lt;/$vars&gt;
+
+&lt;/div&gt;
+</pre>
+</div>
+<div created="20210121183809833" modified="20210121183833116" title="$:/DefaultTiddlers">
 <pre>GettingStarted
 [[Java Projects]]
 [[C, C#, C++, .NET Projects]]
 [[Python Projects]]
-[[Web Projects]]</pre>
+[[Web Projects]]
+</pre>
 </div>
 <div created="20210121181503028" modified="20210121181504513" title="$:/GitHub/Branch">
 <pre>main</pre>
@@ -10157,22 +10253,25 @@ Error message and password prompt
 <div created="20210121181734036" modified="20210121181740248" title="$:/SiteTitle">
 <pre>The Official Finnsoftware Wiki</pre>
 </div>
-<div created="20210121184332683" modified="20210121184332683" title="$:/state/plugin-info-334910430-$:/core---1812962263">
+<div created="20210121184123473" modified="20210121184123473" title="$:/state/plugin-info-334910430-$:/core---1812962263">
 <pre>contents</pre>
+</div>
+<div created="20210121184006888" modified="20210121184042149" title="$:/state/sidebar">
+<pre>yes</pre>
 </div>
 <div created="20210121182449556" modified="20210121182449556" title="$:/state/tab--1963855381">
 <pre>$:/core/ui/ControlPanel/Toolbars</pre>
 </div>
-<div created="20210121181444735" modified="20210121183911022" title="$:/state/tab-1749438307">
+<div created="20210121181444735" modified="20210121183805906" title="$:/state/tab-1749438307">
 <pre>$:/core/ui/ControlPanel/Info</pre>
 </div>
 <div created="20210121181446712" modified="20210121183134984" title="$:/state/tab-2065006209">
 <pre>$:/core/ui/ControlPanel/Saving/General</pre>
 </div>
-<div created="20210121184329984" modified="20210121184329984" title="$:/state/tab/moresidebar-1850697562">
+<div created="20210121184119584" modified="20210121184418060" title="$:/state/tab/moresidebar-1850697562">
 <pre>$:/core/ui/MoreSideBar/Plugins</pre>
 </div>
-<div created="20210121181800034" modified="20210121184326864" title="$:/state/tab/sidebar--595412856">
+<div created="20210121181800034" modified="20210121184416883" title="$:/state/tab/sidebar--595412856">
 <pre>$:/core/ui/SideBar/More</pre>
 </div>
 <div created="20210121182450356" modified="20210121182510743" title="$:/state/tabs/controlpanel/toolbars-1345989671">
@@ -10181,7 +10280,7 @@ Error message and password prompt
 <div title="$:/status/RequireReloadDueToPluginChange">
 <pre>no</pre>
 </div>
-<div created="20210121184330897" list="$:/core GettingStarted [[Java Projects]] [[C, C#, C++, .NET Projects]] [[Python Projects]] [[Web Projects]]" modified="20210121184337105" title="$:/StoryList">
+<div created="20210121184419015" list="$:/core $:/core/ui/SideBarSegments/search GettingStarted [[Java Projects]] [[C, C#, C++, .NET Projects]] [[Python Projects]] [[Web Projects]]" modified="20210121184422205" title="$:/StoryList">
 <pre></pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="$:/themes/tiddlywiki/vanilla" description="Emphasises individual tiddlers" name="Snow White" plugin-priority="0" plugin-type="theme" title="$:/themes/tiddlywiki/snowwhite" type="application/json" version="5.1.23">
@@ -10311,7 +10410,7 @@ Or use out search bar located above the table of contents to the right of the pa
   
 Still have questions? contact our speedy Support Team, and expect a reply in the next week. </pre>
 </div>
-<div created="20210121183654958" modified="20210121183710284" tags="java" title="Java Projects">
+<div created="20210121183627470" modified="20210121183639281" tags="java" title="Java Projects">
 <pre>Java Projects</pre>
 </div>
 <div created="20210121183251150" modified="20210121183305348" tags=".py python" title="Python Projects">
