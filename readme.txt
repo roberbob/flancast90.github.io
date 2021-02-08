@@ -1,1 +1,1 @@
-text file content test github. Check website at https://www.finnsoftware.net
+The files included in this repository are a work-in-progress wiki software, named Finniky. Finniky hopes to be the "wiki-of-the-future," run by a small, self-modifying code that links back to Github. 
