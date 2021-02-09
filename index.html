@@ -81,12 +81,12 @@ margin-bottom:55px;
 <script>
 //get google profile info on signIn
 function onSignIn(googleUser) {
-  alert('success');
-  /*var profile = googleUser.getBasicProfile();
+  //alert('success');
+  var profile = googleUser.getBasicProfile();
   document.getElementsByClassName('g-signin2')[0].style.display="none"
   document.getElementById('logon').style.display='block';
   var imgGoogle = profile.getImageUrl()
-  document.getElementById('logon').src = imgGoogle;*/
+  document.getElementById('logon').src = imgGoogle;
 }
 </script>
 
