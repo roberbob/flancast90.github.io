@@ -363,7 +363,7 @@ Ut sit amet neque magna. Donec nec interdum tellus. Suspendisse porta magna nisi
 <p style="font-size:18px; border-bottom: 2px solid #c8ccd1;"><b>Quick Navigation</b></p>
 
 <div>
-<a href="#">Main Page</a><br>
+<a href="#" onclick="window.open(loc+'','_self')">Main Page</a><br>
 <a href="#">New Page</a><br>
 <a href="#">Random Page</a><br>
 
@@ -406,6 +406,15 @@ function googleTranslateElementInit() {
 <input type="button" value="Licence" style="padding-top:5px; padding-bottom:5px;background-color:white; border:0px;"/>
 </footer>
 <!--END-->
+
+<script>
+           
+           var loc= 
+            window.location.origin 
+                ? window.location.origin + '/'
+                : window.location.protocol + '/' + window.location.host + '/';
+               
+            </script>
 
 </body>
 </html>
