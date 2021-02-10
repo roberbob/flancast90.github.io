@@ -379,7 +379,21 @@ Ut sit amet neque magna. Donec nec interdum tellus. Suspendisse porta magna nisi
 <a href="#">Random Page</a><br>
 
 <p style="font-size:18px; border-bottom: 2px solid #c8ccd1;"><b>More Tools</b></p>
-<a href="#">PermaLink</a><br>
+<a href="#" onclick="generateLink()">PermaLink</a><br>
+  <script>
+    function generateLink(){
+      alert('✔️ Link Copied to Clipboard!');
+      var hiddenInput = document.createElement("input");
+  hiddenInput.setAttribute("id", "myInput");
+  hiddenInput.setAttribute("type", "hidden");
+document.body.appendChild(hiddenInput);  
+    document.getElementById('myInput').value=window.location.href;
+  var copyText = document.getElementById("myInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+    }
+  </script>
 <a href="#" onclick="window.print()">Print Page Mode</a><br>
 
   <div id="Licence">
