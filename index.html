@@ -382,12 +382,13 @@ Ut sit amet neque magna. Donec nec interdum tellus. Suspendisse porta magna nisi
 <a href="#" onclick="generateLink()">PermaLink</a><br>
   <script>
     function generateLink(){
-      alert('✔️ Link Copied to Clipboard!');
-      var hiddenInput = document.createElement("input");
-  hiddenInput.setAttribute("id", "myInput");
-  hiddenInput.setAttribute("type", "hidden");
-document.body.appendChild(hiddenInput);  
-    document.getElementById('myInput').value=window.location.href;
+      alert('✔️ Link Copied to Clipboard!');  
+    var inper = document.createElement('input');
+inper.setAttribute('id','myInput');
+inper.setAttribute('type','hidden');
+inper.setAttribute('value',window.location.href);
+document.body.appendChild(inper);
+
   var copyText = document.getElementById("myInput");
   copyText.select();
   copyText.setSelectionRange(0, 99999);
