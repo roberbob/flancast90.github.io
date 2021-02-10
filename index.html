@@ -70,7 +70,7 @@ margin-bottom:55px;
 <!--Avatar Log On w/ Google-->
 <!--Displayed Onsuccess-->
 <img id="logon" style="position:fixed; right:40px; top:10px; width:40px; height:40px; display:none;" src="https://tse2.mm.bing.net/th/id/OIP.il-z4LVivubSKPlBzX6kowHaHa?pid=Api&rs=1"/>
-<a href="#" onclick="signOut();" style="position:fixed; right:40px; top:52px; display:none;">Log Out</a>
+<a href="#" id="logout" onclick="signOut();" style="position:fixed; right:40px; top:52px; display:none;">Log Out</a>
 <script>
   function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
@@ -97,6 +97,7 @@ function onSignIn(googleUser) {
   document.getElementById('logon').style.display='block';
   var imgGoogle = profile.getImageUrl()
   document.getElementById('logon').src = imgGoogle;
+  document.getElementByIf('logout').style.display="block";
 }
 </script>
 
