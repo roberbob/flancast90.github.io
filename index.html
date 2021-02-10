@@ -70,6 +70,16 @@ margin-bottom:55px;
 <!--Avatar Log On w/ Google-->
 <!--Displayed Onsuccess-->
 <img id="logon" style="position:fixed; right:40px; top:10px; width:40px; height:40px; display:none;" src="https://tse2.mm.bing.net/th/id/OIP.il-z4LVivubSKPlBzX6kowHaHa?pid=Api&rs=1"/>
+<a href="#" onclick="signOut();" style="position:fixed; right:40px; top:52px; display:none;">Log Out</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
+
 <!--below is basic google signin button code-->
 
 <div style="position:fixed; right:40px; top:10px;">
