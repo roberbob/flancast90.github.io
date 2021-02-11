@@ -70,13 +70,13 @@ document.getElementById('search-foo').addEventListener("keyup", function(event) 
   if (event.code === 'Enter') {
     var i = 0;
   
-  var lens = document.getElementsByClassName('find').length;
+  var lens = document.getElementsByClassName('con').length;
   
   var next = document.getElementById('search-foo').value;
   var str = next.toLowerCase();
   
   while (i<lens){
-  var stored = (document.getElementsByClassName('find')[i].innerHTML).toLowerCase();
+  var stored = (document.getElementsByClassName('con')[i].innerHTML).toLowerCase();
   if (stored.includes(str)){
   alert('hi');
   }else{
@@ -87,7 +87,6 @@ document.getElementById('search-foo').addEventListener("keyup", function(event) 
   
 }
 }); 
-}
   </script>
 <!--END-->
 
@@ -204,7 +203,7 @@ Finniki is a community-supported creation, and is not free to up-keep. We would 
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-<p id="text">
+<p class="con" id="text">
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at enim nibh. Vivamus eget est libero. Nulla bibendum nisi neque, suscipit bibendum nulla varius sit amet. Donec nec egestas diam, rutrum semper tortor. Cras sit amet metus magna. Quisque maximus quam in diam fringilla congue. Sed a pellentesque ipsum. Duis a sodales massa.
 
