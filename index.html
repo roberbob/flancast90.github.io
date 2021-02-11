@@ -63,8 +63,32 @@ margin-bottom:55px;
 <!--Logo-->
 <img src="https://i.imgur.com/GbhSYFS.png" style="width:30%; position: fixed; left:0px; height:50px;"/>
 
-<!--Expandable Searchbar-->
-<input type="text" class="Search" placeholder="Search this Wiki" style="width:10%;position:fixed;left:33%;"/>
+<!--Expandable Searchbar and search js-->
+<input type="text" id="search-foo" class="Search" placeholder="Search this Wiki" style="width:10%;position:fixed;left:33%;"/>
+  <script>
+document.getElementById('search-foo').addEventListener("keyup", function(event) {
+  if (event.code === 'Enter') {
+    var i = 0;
+  
+  var lens = document.getElementsByClassName('find').length;
+  
+  var next = document.getElementById('search-foo').value;
+  var str = next.toLowerCase();
+  
+  while (i<lens){
+  var stored = (document.getElementsByClassName('find')[i].innerHTML).toLowerCase();
+  if (stored.includes(str)){
+  alert('hi');
+  }else{
+  alert('not included');
+  }
+  i++;
+  }
+  
+}
+}); 
+}
+  </script>
 <!--END-->
 
 <!--Avatar Log On w/ Google-->
