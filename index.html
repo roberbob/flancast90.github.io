@@ -51,6 +51,16 @@ text-decoration:none;
 color:#1890ff;
 opacity:0.5;
 }
+#navig li{
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
 #google_translate_element{
 position:fixed;
 bottom:0px;
@@ -68,6 +78,12 @@ margin-bottom:55px;
 
 <!--Expandable Searchbar and search js-->
 <input type="text" id="search-foo" class="Search" placeholder="Search this Wiki" style="width:10%;position:fixed;left:33%;"/>
+<ol id="navig" style="width:40%; left:33%; position:absolute; margin-top:50px; z-index:1000;">
+
+</ol>
+
+</datalist>
+
   <script>
 document.getElementById('search-foo').addEventListener("keyup", function(event) {
   if (event.code === 'Enter') {
@@ -79,9 +95,13 @@ document.getElementById('search-foo').addEventListener("keyup", function(event) 
   var str = next.toLowerCase();
   
   while (i<lens){
+    
   var stored = (document.getElementsByClassName('con')[i].innerHTML).toLowerCase();
   if (stored.includes(str)){
-  alert('hi');
+  
+  var n = stored.substring(stored.indexOf(str), parseInt(stored.indexOf(str))+30);
+  document.getElementById('navig').innerHTML += '<a href="#"><li>'+n+'</li></a>';
+    
   }else{
   alert('not included');
   }
