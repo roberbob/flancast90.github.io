@@ -78,7 +78,7 @@ margin-bottom:55px;
 
 <!--Expandable Searchbar and search js-->
 <input type="text" id="search-foo" class="Search" placeholder="Search this Wiki" style="width:10%;position:fixed;left:33%;"/>
-<ol id="navig" style="width:40%; left:30%; position:absolute; margin-top:50px; ">
+<ol id="navig" style="width:40%; left:30%; position:absolute; margin-top:50px; " autocomplete="off">
 
 </ol>
 
@@ -112,6 +112,11 @@ document.getElementById('search-foo').addEventListener("keyup", function(event) 
   
 }
 }); 
+
+/* Easy way to make sure search results always add into a new results ordered list. Without this, all searches a user made in a session would be stored, leading to a messy UI */
+document.addEventListener('click',function(){
+document.getElementById('navig').innerHTML = '';
+});
   </script>
 <!--END-->
 
