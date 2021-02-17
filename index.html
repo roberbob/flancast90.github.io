@@ -171,6 +171,11 @@ function loaded(){
 var pageId = window.location.href;
 
 if (pageId.includes('?')){
+}else{
+window.location.href = window.location.href+"?main%20page";
+}
+
+if (pageId.includes('?')){
 var spli = pageId.split('?')[1];
 var spli2 = decodeURIComponent(spli);
 
@@ -210,7 +215,7 @@ document.getElementById('container').style.width="100%";
 Finniki is a community-supported creation, and is not free to up-keep. We would support it if you could show your appreciation for us by a small donation. If each of our users donated just $1.25 to us this year, we would pass our yearly goal!
 
 </p></div>
-<button class="btn" style="display:inline;float:left;width:25%;cursor:pointer;" onclick="document.getElementById('text').style.display='block'; document.getElementById('disqus_thread').style.display='none'; document.getElementById('editScr').style.display='none';"><p id="article">
+<button class="btn" style="display:inline;float:left;width:25%;cursor:pointer;" onclick="location.reload(true); document.getElementById('disqus_thread').style.display='none'; document.getElementById('editScr').style.display='none';"><p id="article">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
   <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
   <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -447,9 +452,9 @@ function googleTranslateElementInit() {
 
 <!--Footer and Content below page, until END-->
 <footer style="width:100%; background-color:#1890ff; padding-bottom:10px; padding-top:10px;">
-<input type="button" value="Finnsoftware" style="margin-left:50%; padding-top:5px; padding-bottom:5px;background-color:white; border:0px;"/>
+<input type="button" value="Finnsoftware" style="margin-left:50%; padding-top:5px; padding-bottom:5px;background-color:white; border:0px; cursor:pointer;" onclick="window.open('https://www.finnsoftware.net');"/>
 <input type="button" value="Blog" style="padding-top:5px; padding-bottom:5px;background-color:white; border:0px;"/>
-<input type="button" value="Licence" style="padding-top:5px; padding-bottom:5px;background-color:white; border:0px;"/>
+<input type="button" value="Licence" style="padding-top:5px; padding-bottom:5px;background-color:white; border:0px; cursor:pointer;" onclick="window.open('https://github.com/flancast90/flancast90.github.io/blob/main/LICENSE');"/>
 </footer>
 <!--END-->
 
