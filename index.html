@@ -104,7 +104,8 @@ document.getElementById('search-foo').addEventListener("keyup", function(event) 
                 c++; 
                 r = s.indexOf(f, r + 1); 
                 var num=s.substring(r,r+30);
-                document.getElementById('navig').innerHTML += `<li><a href="">`+num+`</a></li>`;
+                document.getElementById('navig').innerHTML += `<li><a href="?`+num+`">`+num+`</a></li>`;
+
             } 
             
             i++;
@@ -166,7 +167,30 @@ function onSignIn(googleUser) {
 
 <script>
 function loaded(){
-if (window.innerWidth < 900){
+
+var pageId = window.location.href;
+
+if (pageId.includes('?')){
+var spli = pageId.split('?')[1];
+var spli2 = decodeURIComponent(spli);
+
+var counter = 0;
+var leng = document.getElementsByClassName('title').length;
+
+while (counter < leng){
+if ((document.getElementsByClassName('title')[counter].innerHTML).toLowerCase() !== spli2){
+document.getElementsByClassName('title')[counter].style.display = 'none';
+document.getElementsByClassName('con')[counter].style.display = 'none';
+}else{
+document.getElementsByClassName('title')[counter].style.display = 'block';
+document.getElementsByClassName('con')[counter].style.display = 'block';
+}
+counter++;
+}
+
+}
+
+if (window.innerWidth < 900 || screen.width<900){
 document.getElementById('hamburger-menu').style.display="block";
 document.getElementById('sidebar').style.display='none';
 document.getElementById('container').style.width="100%";
@@ -186,7 +210,7 @@ document.getElementById('container').style.width="100%";
 Finniki is a community-supported creation, and is not free to up-keep. We would support it if you could show your appreciation for us by a small donation. If each of our users donated just $1.25 to us this year, we would pass our yearly goal!
 
 </p></div>
-<button class="btn" style="display:inline;float:left;width:25%;cursor:pointer;" onclick="document.getElementById('text').style.display='block'; document.getElementById('disqus_thread').style.display='none'"><p id="article">
+<button class="btn" style="display:inline;float:left;width:25%;cursor:pointer;" onclick="document.getElementById('text').style.display='block'; document.getElementById('disqus_thread').style.display='none'; document.getElementById('editScr').style.display='none';"><p id="article">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
   <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
   <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -194,7 +218,20 @@ Finniki is a community-supported creation, and is not free to up-keep. We would 
 </svg><b> Article</b>
 </p></button>
 
-<button class="btn" style="display:inline;float:left;width:25%;cursor:pointer;"><p id="edit">
+<button class="btn" style="display:inline;float:left;width:25%;cursor:pointer;" onclick="document.getElementById('text').style.display='none'; document.getElementById('disqus_thread').style.display='none'; document.getElementById('editScr').style.display='block'; 
+var cou = 0;
+var nummm = document.getElementsByClassName('con').length;
+var mmat = (decodeURIComponent(window.location.href.split('?')[1]));
+
+while (cou < nummm){
+if (mmat == document.getElementsByClassName('title')[cou].innerHTML.toLowerCase()){
+document.getElementById('editTXT').value= document.getElementsByClassName('con')[cou].innerHTML;
+}
+cou++;
+}
+
+
+"><p id="edit">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
   <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
 </svg><b> Edit</b>
@@ -207,7 +244,7 @@ Finniki is a community-supported creation, and is not free to up-keep. We would 
 </svg><b> Revisions</b>
 </p></button>
 
-<button class="btn" style="display:inline; float:right;width:25%;cursor:pointer;" onclick="document.getElementById('text').style.display='none'; document.getElementById('disqus_thread').style.display='block'"><p id="disqus">
+<button class="btn" style="display:inline; float:right;width:25%;cursor:pointer;" onclick="document.getElementById('text').style.display='none'; document.getElementById('disqus_thread').style.display='block'; document.getElementById('editScr').style.display='none';"><p id="disqus">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
   <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
 </svg><b> Discussion</b>
@@ -231,10 +268,77 @@ Finniki is a community-supported creation, and is not free to up-keep. We would 
     (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<noscript>This Page is Powered by JavaScript. If you do not turn on JavaScript, the page may experience some difficulties.</noscript>
+<div id="editScr" style="display:none; background-color:lightgray; padding-top:7px; margin-left:10px; margin-right:10px; margin-top:20px; border-radius:5px 5px 0px 0px;">
+<center>
+<button id="Bold" style="display:inline;">
+<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-bold" viewBox="0 0 16 16">
+  <path d="M8.21 13c2.106 0 3.412-1.087 3.412-2.823 0-1.306-.984-2.283-2.324-2.386v-.055a2.176 2.176 0 0 0 1.852-2.14c0-1.51-1.162-2.46-3.014-2.46H3.843V13H8.21zM5.908 4.674h1.696c.963 0 1.517.451 1.517 1.244 0 .834-.629 1.32-1.73 1.32H5.908V4.673zm0 6.788V8.598h1.73c1.217 0 1.88.492 1.88 1.415 0 .943-.643 1.449-1.832 1.449H5.907z"/>
+</svg>
+</button>
+<button id="Italic" style="display:inline;">
+<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-italic" viewBox="0 0 16 16">
+  <path d="M7.991 11.674L9.53 4.455c.123-.595.246-.71 1.347-.807l.11-.52H7.211l-.11.52c1.06.096 1.128.212 1.005.807L6.57 11.674c-.123.595-.246.71-1.346.806l-.11.52h3.774l.11-.52c-1.06-.095-1.129-.211-1.006-.806z"/>
+</svg>
+</button>
+<button id="Underline" style="display:inline;">
+<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-underline" viewBox="0 0 16 16">
+  <path d="M5.313 3.136h-1.23V9.54c0 2.105 1.47 3.623 3.917 3.623s3.917-1.518 3.917-3.623V3.136h-1.23v6.323c0 1.49-.978 2.57-2.687 2.57-1.709 0-2.687-1.08-2.687-2.57V3.136zM12.5 15h-9v-1h9v1z"/>
+</svg>
+</button>
+<button id="img" style="display:inline;"><svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+  <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+</svg></button>
+<button id="link" style="display:inline;">
+<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+  <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+  <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z"/>
+</svg>
+</button>
+</center>
+<center>
+<textarea style="height: 80vh; width:98%;" id="editTXT">
+</textarea>
+<button id="cancel" style="display:inline; width:45%;" onclick="
+document.getElementById('editScr').style.display='none';
+var coo = decodeURIComponent((window.location.href).split('?')[1].toLowerCase())
+var nummb = document.getElementsByClassName('title').length;
+var counts = 0;
+
+
+while (counts < nummb){
+if (document.getElementsByClassName('title')[counts].innerHTML.toLowerCase() == coo){
+document.getElementsByClassName('title')[counts].style.display = 'block';
+document.getElementsByClassName('con')[counts].style.display='block';
+}
+counts++;
+}
+
+"
+>❌Cancel</button>
+<button id="confirm" onclick="
+var co = decodeURIComponent((window.location.href).split('?')[1].toLowerCase())
+var numm = document.getElementsByClassName('title').length;
+var iii = 0;
+
+while (iii < numm){
+if (document.getElementsByClassName('title')[iii].innerHTML.toLowerCase() == co){
+document.getElementsByClassName('title')[iii].style.display = 'block';
+document.getElementsByClassName('con')[iii].style.display='block';
+document.getElementsByClassName('con')[iii].innerHTML = document.getElementById('editTXT').value;
+document.getElementById('editScr').style.display='none';
+}
+iii++;
+}
+
+"
+style="display:inline; width:45%;">✔️Confirm</button>
+</center>
+</div>
 
 <p class="con" id="text">
-  <span class="title" style="font-size: 18px; text-align:center;"><b>Main Page</b></span><br>
+  <span class="title" style="font-size: 18px; text-align:center; color: #1890ff" onclick="window.open((window.location.href).split('?')[0]+'?'+(this.innerHTML).toLowerCase(), '_self');">Main Page</span><br>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at enim nibh. Vivamus eget est libero. Nulla bibendum nisi neque, suscipit bibendum nulla varius sit amet. Donec nec egestas diam, rutrum semper tortor. Cras sit amet metus magna. Quisque maximus quam in diam fringilla congue. Sed a pellentesque ipsum. Duis a sodales massa.
 
@@ -276,7 +380,12 @@ Nulla ultrices ullamcorper ultricies. In et nibh aliquet, varius nisl quis, orna
 
 Pellentesque molestie sem a nulla posuere viverra. Donec ornare risus quis dolor accumsan elementum. Mauris auctor lacus mollis, placerat nulla in, ullamcorper est. Aenean iaculis elementum vestibulum. Maecenas sit amet massa massa. Mauris nulla nunc, egestas efficitur maximus nec, faucibus a mauris. Sed volutpat laoreet ante vitae posuere. Aenean porta quam vitae ex tempor, in scelerisque leo varius. In sit amet placerat est. Nam vitae enim leo. Pellentesque scelerisque, felis in scelerisque varius, mauris ante aliquet diam, quis sodales risus lacus quis purus. Proin eget tincidunt massa, ut mollis enim. Pellentesque non lectus varius, rhoncus odio accumsan, luctus nibh.
 
-</p></div>
+</p>
+<p class="con" style="display:none">
+<span class="title" style="font-size: 18px; text-align:center; color: #1890ff" onclick="window.open((window.location.href).split('?')[0]+'?'+(this.innerHTML).toLowerCase(), '_self')">TestTestTest</span><br>
+This is a test Page
+</p>
+</div>
 </div>
 
 <!--END-->
@@ -285,9 +394,9 @@ Pellentesque molestie sem a nulla posuere viverra. Donec ornare risus quis dolor
 <p style="font-size:18px; border-bottom: 2px solid #c8ccd1;"><b>Quick Navigation</b></p>
 
 <div>
-<a href="#" onclick="window.open(loc+'','_self')">Main Page</a><br>
-<a href="#">New Page</a><br>
-<a href="#">Random Page</a><br>
+<a href="" onclick="window.open((window.location.href).split('?')[0]+'?'+'main%20page'+.toLowerCase(), '_self')">Main Page</a><br>
+<a href="">New Page</a><br>
+<a href="">Random Page</a><br>
 
 <p style="font-size:18px; border-bottom: 2px solid #c8ccd1;"><b>More Tools</b></p>
 <a href="#" onclick="generateLink()">PermaLink</a><br>
@@ -355,4 +464,3 @@ function googleTranslateElementInit() {
 
 </body>
 </html>
-
