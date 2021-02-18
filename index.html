@@ -1,4 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
+<!-- WHAT I FEEL LIKE: 17 FEBRUARY 2021
+    ___  ________  ___      ___ ________  ________  ________  ________  ___  ________  _________       
+   |\  \|\   __  \|\  \    /  /|\   __  \|\   ____\|\   ____\|\   __  \|\  \|\   __  \|\___   ___\     
+   \ \  \ \  \|\  \ \  \  /  / | \  \|\  \ \  \___|\ \  \___|\ \  \|\  \ \  \ \  \|\  \|___ \  \_|     
+ __ \ \  \ \   __  \ \  \/  / / \ \   __  \ \_____  \ \  \    \ \   _  _\ \  \ \   ____\   \ \  \      
+|\  \\_\  \ \  \ \  \ \    / /   \ \  \ \  \|____|\  \ \  \____\ \  \\  \\ \  \ \  \___|    \ \  \     SUCKS
+\ \________\ \__\ \__\ \__/ /     \ \__\ \__\____\_\  \ \_______\ \__\\ _\\ \__\ \__\        \ \__\    
+ \|________|\|__|\|__|\|__|/       \|__|\|__|\_________\|_______|\|__|\|__|\|__|\|__|         \|__|    
+                                            \|_________|                                               
+                                                                                                       
+-->
 <html>
   
   <title>Finniky: A finicky wiki without a server</title>
@@ -86,8 +97,12 @@ margin-bottom:55px;
 
   <script>
 document.getElementById('search-foo').addEventListener("keyup", function(event) {
+
   if (event.code === 'Enter') {
-  
+  if ((document.getElementById('search-foo').value).length < 3){
+     alert('Please enter more characters in your search.');
+  }else{  
+
   var lens=document.getElementsByClassName('title').length;
   var i= 0;
   
@@ -112,6 +127,8 @@ document.getElementById('search-foo').addEventListener("keyup", function(event) 
             }
   
 }
+}
+
 }); 
 
 /* Easy way to make sure search results always add into a new results ordered list. Without this, all searches a user made in a session would be stored, leading to a messy UI */
@@ -168,6 +185,7 @@ function onSignIn(googleUser) {
 <script>
 function loaded(){
 
+sessionStorage.setItem('RevNum',0);
 var pageId = window.location.href;
 
 if (pageId.includes('?')){
@@ -179,20 +197,21 @@ if (pageId.includes('?')){
 var spli = pageId.split('?')[1];
 var spli2 = decodeURIComponent(spli);
 
+
 var counter = 0;
 var leng = document.getElementsByClassName('title').length;
 
 while (counter < leng){
-if ((document.getElementsByClassName('title')[counter].innerHTML).toLowerCase() !== spli2){
-document.getElementsByClassName('title')[counter].style.display = 'none';
-document.getElementsByClassName('con')[counter].style.display = 'none';
-}else{
+if ((document.getElementsByClassName('title')[counter].innerHTML).toLowerCase() == spli2){
 document.getElementsByClassName('title')[counter].style.display = 'block';
 document.getElementsByClassName('con')[counter].style.display = 'block';
+}else{
+document.getElementsByClassName('title')[counter].style.display='none';
+document.getElementsByClassName('con')[counter].style.display='none';
 }
 counter++;
-}
 
+}
 }
 
 if (window.innerWidth < 900 || screen.width<900){
@@ -200,6 +219,7 @@ document.getElementById('hamburger-menu').style.display="block";
 document.getElementById('sidebar').style.display='none';
 document.getElementById('container').style.width="100%";
 }
+
 }
 </script>
 <!--END MobileMenu-->
@@ -337,6 +357,13 @@ document.getElementById('editScr').style.display='none';
 iii++;
 }
 
+//KEEP TRACK OF NUM OF REVISIONS
+
+sessionStorage.setItem('RevNum', parseInt(sessionStorage.getItem('RevNum'))+1);
+
+//SAVE REVISIONS IN SESSION STORAGE TO BE ADDED TO REVISIONS PAGE LATER
+
+sessionStorage.setItem('Rev'+sessionStorage.getItem('RevNum'), document.getElementById('editTXT').value);
 "
 style="display:inline; width:45%;">✔️Confirm</button>
 </center>
@@ -390,6 +417,9 @@ Pellentesque molestie sem a nulla posuere viverra. Donec ornare risus quis dolor
 <span class="title" style="font-size: 18px; text-align:center; color: #1890ff" onclick="window.open((window.location.href).split('?')[0]+'?'+(this.innerHTML).toLowerCase(), '_self')">TestTestTest</span><br>
 This is a test Page
 </p>
+
+<!--This is where new "pages" are appended-->
+
 </div>
 </div>
 
@@ -399,7 +429,7 @@ This is a test Page
 <p style="font-size:18px; border-bottom: 2px solid #c8ccd1;"><b>Quick Navigation</b></p>
 
 <div>
-<a href="" onclick="window.open((window.location.href).split('?')[0]+'?'+'main%20page'+.toLowerCase(), '_self')">Main Page</a><br>
+<a href="" onclick="window.location.href = window.location.href+'main%20page';">Main Page</a><br>
 <a href="">New Page</a><br>
 <a href="">Random Page</a><br>
 
