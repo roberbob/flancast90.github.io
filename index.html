@@ -356,43 +356,71 @@ document.getElementById('revisionScr').style.display='none';
 </ul>
 </div>
 <script>
+function wrapAsLinkB(url){
+  var textarea = document.getElementById("editTXT");
+  var len = textarea.value.length;
+  var start = textarea.selectionStart;
+  var end = textarea.selectionEnd;
+  var sel = textarea.value.substring(start, end);
+  var replace = '<b>' + sel + '</b>';
+  textarea.value = textarea.value.substring(0,start) + replace +
+  textarea.value.substring(end,len);
+}
+function wrapAsLinkU(url){
+  var textarea = document.getElementById("editTXT");
+  var len = textarea.value.length;
+  var start = textarea.selectionStart;
+  var end = textarea.selectionEnd;
+  var sel = textarea.value.substring(start, end);
+  var replace = '<u>' + sel + '</u>';
+  textarea.value = textarea.value.substring(0,start) + replace +
+  textarea.value.substring(end,len);
+}
+function wrapAsLinkI(url){
+  var textarea = document.getElementById("editTXT");
+  var len = textarea.value.length;
+  var start = textarea.selectionStart;
+  var end = textarea.selectionEnd;
+  var sel = textarea.value.substring(start, end);
+  var replace = '<i>' + sel + '</i>';
+  textarea.value = textarea.value.substring(0,start) + replace +
+  textarea.value.substring(end,len);
+}
 function typeInTextarea(newText, el = document.getElementById('editTXT')) {
-  const start = el.selectionStart
-  const end = el.selectionEnd
-  const text = el.value
-  const before = text.substring(0, start)
-  const after  = text.substring(end, text.length)
-  el.value = (before + newText + after)
-  el.selectionStart = el.selectionEnd = start + newText.length
-  el.focus()
+  const [start, end] = [el.selectionStart, el.selectionEnd];
+  el.setRangeText(newText, start, end, 'select');
 }
 </script>
+
 <div id="editScr" style="display:none; background-color:lightgray; padding-top:7px; margin-left:10px; margin-right:10px; margin-top:20px; border-radius:5px 5px 0px 0px;">
 <center>
 <button id="Bold" style="display:inline;" onclick="
-typeInTextarea('<b>TEXT</b>');
-
+wrapAsLinkB()
 "
 >
 <svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-bold" viewBox="0 0 16 16">
   <path d="M8.21 13c2.106 0 3.412-1.087 3.412-2.823 0-1.306-.984-2.283-2.324-2.386v-.055a2.176 2.176 0 0 0 1.852-2.14c0-1.51-1.162-2.46-3.014-2.46H3.843V13H8.21zM5.908 4.674h1.696c.963 0 1.517.451 1.517 1.244 0 .834-.629 1.32-1.73 1.32H5.908V4.673zm0 6.788V8.598h1.73c1.217 0 1.88.492 1.88 1.415 0 .943-.643 1.449-1.832 1.449H5.907z"/>
 </svg>
 </button>
-<button id="Italic" style="display:inline;" onclick="typeInTextarea('<i>TEXT</i>');">
+<button id="Italic" style="display:inline;" onclick="wrapAsLinkI()">
 <svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-italic" viewBox="0 0 16 16">
   <path d="M7.991 11.674L9.53 4.455c.123-.595.246-.71 1.347-.807l.11-.52H7.211l-.11.52c1.06.096 1.128.212 1.005.807L6.57 11.674c-.123.595-.246.71-1.346.806l-.11.52h3.774l.11-.52c-1.06-.095-1.129-.211-1.006-.806z"/>
 </svg>
 </button>
-<button id="Underline" style="display:inline;" onclick="typeInTextarea('<u>TEXT</u>');">
+<button id="Underline" style="display:inline;" onclick="wrapAsLinkU()">
 <svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-underline" viewBox="0 0 16 16">
   <path d="M5.313 3.136h-1.23V9.54c0 2.105 1.47 3.623 3.917 3.623s3.917-1.518 3.917-3.623V3.136h-1.23v6.323c0 1.49-.978 2.57-2.687 2.57-1.709 0-2.687-1.08-2.687-2.57V3.136zM12.5 15h-9v-1h9v1z"/>
 </svg>
 </button>
-<button id="img" onclick="typeInTextarea(`<img src='URL OF IMAGE'/>`);" style="display:inline;"><svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+<button id="enter" style="display:inline;" onclick="typeInTextarea('<br>');"><svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+</svg>
+</button>
+<button id="img" onclick="var imgsrc=prompt('Please enter a direct image URL'); typeInTextarea('<img style=\'width:50%\' src=\''+imgsrc+'\'/>')" style="display:inline;"><svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
   <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
   <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
 </svg></button>
-<button id="link" style="display:inline;" onclick="typeInTextarea(`<a href=Link URL'>LINK LABEL</a>`);">
+<button id="link" style="display:inline;" onclick="var URL=prompt('Enter the path to your link (URL)'); var label= prompt('Enter the text you would like your link to display'); typeInTextarea(`<a href='`+URL+`'>`+label+`</a>`);">
 <svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
   <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
   <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z"/>
@@ -400,7 +428,7 @@ typeInTextarea('<b>TEXT</b>');
 </button>
 </center>
 <center>
-<textarea style="height: 80vh; width:98%;" id="editTXT">
+<textarea contenteditable="true" spellcheck="false" style="height: 80vh; width:98%;" id="editTXT">
 </textarea>
 <button id="cancel" style="display:inline; width:45%;" onclick="
 document.getElementById('discussionbtn').disabled=false;
@@ -571,7 +599,9 @@ encodeURIComponent(text));
   document.body.removeChild(pom);
 }
 download('FinnikyWiki', document.getElementsByTagName('html')[0].innerHTML)
-">Download this Finniky</a>
+">Download this Finniky</a><br>
+<a href="https://www.finnsoftware.net/wikiprogram-home/our-dev-team">About Us</a><br>
+<a href="https://www.finnsoftware.net/wikiprogram-home/contact">Contact</a><br>
 
   <div id="Licence">
 <button style="background-color:lightblue; border-radius: 5px 0px 0px 5px; font-weight:bold; color:white; padding-top:0.01px; padding-bottom:0.01px; display:inline; border:0px; outline:none;">
