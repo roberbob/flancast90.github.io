@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <!-- WHAT I FEEL LIKE: 17 FEBRUARY 2021
     ___  ________  ___      ___ ________  ________  ________  ________  ___  ________  _________       
    |\  \|\   __  \|\  \    /  /|\   __  \|\   ____\|\   ____\|\   __  \|\  \|\   __  \|\___   ___\     
@@ -176,7 +178,7 @@ function onSignIn(googleUser) {
 </script>
 
 <!--END Avatar-->
-<div id="top-menu" style="display:none; text-align:center; background-color: white; margin-top:53px;">
+<div id="top-menu" style="padding-bottom:10px; padding-top:10px; margin-left:5px; margin-right: 5px; display:none; text-align:center; background-color: white; margin-top:50px; box-shadow: 0 10px 10px #1890ff;">
 <p style="font-size:18px; border-bottom: 2px solid #c8ccd1; color: #1890ff;"><b>Quick Navigation</b></p>
 
 <div>
@@ -692,18 +694,26 @@ function googleTranslateElementInit() {
                
 </script>
 <script>
+function fadeIn() { 
+            $("#top-menu").slideDown("slow");
+        } 
+function fadeOut() {
+            $("#top-menu").slideUp("slow");
+}
+</script>
+<script>
 document.getElementById('hamburger-menu').addEventListener('click', function(){
+fadeIn();
   document.getElementById('top-menu').style.display='block';
   document.getElementById('canceler').style.display='block';
   
   document.getElementById('hamburger-menu').style.display='none';
 });
 document.getElementById('canceler').addEventListener('click',function(){
+fadeOut();
   document.getElementById('canceler').style.display='none';
   
   document.getElementById('hamburger-menu').style.display='block';
-  
-  document.getElementById('top-menu').style.display='none';
 });
 </script>
 
