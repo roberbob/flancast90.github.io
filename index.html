@@ -30,12 +30,17 @@
 </script>
 
 <style>
-#Licence{
-position:fixed;
-bottom:0px;
-margin-bottom:85px;
-left:75%;
-  }
+.title{
+font-family: Verdana !important;
+font-weight: bold;
+font-size: 30px;
+text-align: center !important; 
+color: #1890ff; 
+}
+.con{
+margin-left:10px; 
+margin-right:10px;
+}
 .goog-te-banner-frame.skiptranslate {display: none !important;} 
 body { top: 0px !important; }
 .Search{
@@ -74,11 +79,6 @@ opacity:0.5;
   font-size: 18px;
   color: black;
   display: block
-}
-#google_translate_element{
-position:fixed;
-bottom:0px;
-margin-bottom:55px;
 }
 </style>
 </head>
@@ -176,11 +176,67 @@ function onSignIn(googleUser) {
 </script>
 
 <!--END Avatar-->
-<!--Mobile Menu and MMjs-->
-<svg id="hamburger-menu" viewBox="0 0 100 80" width="30px" height="30px" fill="gray" style="position:fixed;right:5px;top:10px;display:none;">
-    <rect width="100" height="20" rx="8"></rect>
-    <rect y="30" width="100" height="20" rx="8"></rect>
-    <rect y="60" width="100" height="20" rx="8"></rect>
+<div id="top-menu" style="display:none; text-align:center; background-color: lightgray; margin-top:55px;">
+<p style="font-size:18px; border-bottom: 2px solid #c8ccd1; color: #1890ff;"><b>Quick Navigation</b></p>
+
+<div>
+<a style="cursor:pointer;" onclick="var opener = window.location.href.split('?')[0]+'?main%20page';window.open(opener,'_self');">Main Page</a><br>
+<a href="">New Page</a><br>
+<a style="cursor:pointer;" onclick="
+var lensforrand= parseInt(document.getElementsByClassName('title').length)-1;
+var randgen = Math.floor(Math.random()*lensforrand);
+var txtofrand = encodeURIComponent(document.getElementsByClassName('title')[randgen].innerHTML.toLowerCase());
+window.open(window.location.href.split('?')[0]+'?'+txtofrand,'_self');
+">Random Page</a><br>
+
+<p style="font-size:18px; border-bottom: 2px solid #c8ccd1; color:#1890ff;"><b>More Tools</b></p>
+<a href="" onclick="generateLink()">PermaLink</a><br>
+  <script>
+    function generateLink(){
+      alert('✔️ Link Copied to Clipboard!');  
+    var inper = document.createElement('input');
+inper.setAttribute('id','myInput');
+inper.setAttribute('type','text');
+inper.setAttribute('style','z-index:-1000');
+inper.setAttribute('value',window.location.href);
+document.body.appendChild(inper);
+
+  var copyText = document.getElementById("myInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+    }
+  </script>
+<a href="" onclick="window.print()">Print Page Mode</a><br>
+<a style="cursor:pointer" onclick="
+function download(filename, text) {
+  var pom = document.createElement('a');
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + 
+
+encodeURIComponent(text));
+  pom.setAttribute('download', filename);
+
+  pom.style.display = 'none';
+  document.body.appendChild(pom);
+
+  pom.click();
+
+  document.body.removeChild(pom);
+}
+download('FinnikyWiki', document.getElementsByTagName('html')[0].innerHTML)
+">Download this Finniky</a><br>
+<a href="https://www.finnsoftware.net/wikiprogram-home/our-dev-team">About Us</a><br>
+<a href="https://www.finnsoftware.net/wikiprogram-home/contact">Contact</a><br>
+  
+</div>
+</div>
+
+<svg id="hamburger-menu" style="display:none; position: fixed; right:5px; top:10px; height:30px; width:30px; color: #1890ff;" xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+</svg>
+
+<svg id="canceler" style="position: fixed; right:5px; top:10px; height:30px; width:30px; display:none; color: #1890ff;" xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
 </svg>
 
 <script>
@@ -200,7 +256,7 @@ var spli2 = decodeURIComponent(spli);
 
 
 var counter = 0;
-var leng = document.getElementsByClassName('title').length;
+var leng = parseInt(document.getElementsByClassName('title').length)-1;
 
 while (counter < leng){
 if ((document.getElementsByClassName('title')[counter].innerHTML).toLowerCase() == spli2){
@@ -236,7 +292,7 @@ document.getElementById('container').style.width="100%";
 Finniky is a community-supported creation, and is not free to up-keep. We would support it if you could show your appreciation for us by a small donation. If each of our users donated just $1.25 to us this year, we would pass our yearly goal!
 
 </p></div>
-<button class="btn" id="articlebtn" style="display:inline;float:left;width:25%;cursor:pointer;" onclick="location.reload(true);
+<button class="btn" id="articlebtn" style="display:inline;float:left;width:25%;cursor:pointer; height:5em;" onclick="location.reload(true);
 document.getElementById('articlebtn').disabled=true;
 document.getElementById('discussionbtn').disabled=false;
 document.getElementById('editbtn').disabled=false;
@@ -249,7 +305,7 @@ document.getElementById('revisionbtn').disabled=false;
 </svg><b> Article</b>
 </p></button>
 
-<button id="editbtn" class="btn" style="display:inline;float:left;width:25%;cursor:pointer;" onclick="
+<button id="editbtn" class="btn" style="display:inline;float:left;width:25%;cursor:pointer; height:5em;" onclick="
 document.getElementById('editbtn').disabled=true;
 document.getElementById('discussionbtn').disabled=false;
 document.getElementById('revisionbtn').disabled=false;
@@ -274,7 +330,7 @@ cou++;
 </svg><b> Edit</b>
 </p></button>
 
-<button class="btn" id="revisionbtn" style="display:inline;width:25%;cursor:pointer;" onclick="
+<button class="btn" id="revisionbtn" style=" height:5em; display:inline;width:25%;cursor:pointer;" onclick="
 document.getElementById('disqus_thread').style.display='none';
 document.getElementById('revisionbtn').disabled=true;
 document.getElementById('discussionbtn').disabled=false;
@@ -312,7 +368,7 @@ document.getElementById('revisionScr').innerHTML += `<br>Showing `+numofpg+` of 
 </svg><b> Revisions</b>
 </p></button>
 
-<button id="discussionbtn" class="btn" style="display:inline; float:right;width:25%;cursor:pointer;" onclick="
+<button id="discussionbtn" class="btn" style=" height:5em; display:inline; float:right;width:25%;cursor:pointer;" onclick="
 
 //WON'T LOAD IF WIFI BLOCKS BC OF DISQUS CONFIG 
 
@@ -495,7 +551,7 @@ style="display:inline; width:45%;">✔️Confirm</button>
 
 <div id="text">
 <p class="con">
-  <span class="title" style="font-size: 18px; text-align:center; color: #1890ff" onclick="window.open((window.location.href).split('?')[0]+'?'+(this.innerHTML).toLowerCase(), '_self');">Main Page</span><br>
+  <span class="title" onclick="window.open((window.location.href).split('?')[0]+'?'+(this.innerHTML).toLowerCase(), '_self');">Main Page</span><br>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at enim nibh. Vivamus eget est libero. Nulla bibendum nisi neque, suscipit bibendum nulla varius sit amet. Donec nec egestas diam, rutrum semper tortor. Cras sit amet metus magna. Quisque maximus quam in diam fringilla congue. Sed a pellentesque ipsum. Duis a sodales massa.
 
@@ -539,7 +595,7 @@ Pellentesque molestie sem a nulla posuere viverra. Donec ornare risus quis dolor
 
 </p>
 <p class="con" style="display:none">
-<span class="title" style="font-size: 18px; text-align:center; color: #1890ff" onclick="window.open((window.location.href).split('?')[0]+'?'+(this.innerHTML).toLowerCase(), '_self')">TestTestTest</span><br>
+<span class="title" onclick="window.open((window.location.href).split('?')[0]+'?'+(this.innerHTML).toLowerCase(), '_self')">TestTestTest</span><br>
 This is a test Page
 </p>
 </div>
@@ -551,7 +607,7 @@ This is a test Page
 
 <!--END-->
 <!--Wiki Sidebar and GT Widget-->
-<div id="sidebar" style="position:fixed; left:75%; margin-top:60px; bottom:0px; width:24%; top:0px; background-color:#ffffff; margin-bottom:50px; text-align:center; box-shadow: 0 0px 2px -2px #1890ff; border-bottom:4px solid #1890ff;">
+<div id="sidebar" style="position:fixed; left:75%; margin-top:60px; bottom:0px; width:24%; top:0px; background-color:#ffffff; margin-bottom:55px; text-align:center; box-shadow: 0 0px 2px -2px #1890ff; border-bottom:4px solid #1890ff;">
 <p style="font-size:18px; border-bottom: 2px solid #c8ccd1;"><b>Quick Navigation</b></p>
 
 <div>
@@ -603,19 +659,6 @@ download('FinnikyWiki', document.getElementsByTagName('html')[0].innerHTML)
 <a href="https://www.finnsoftware.net/wikiprogram-home/our-dev-team">About Us</a><br>
 <a href="https://www.finnsoftware.net/wikiprogram-home/contact">Contact</a><br>
 
-  <div id="Licence">
-<button style="background-color:lightblue; border-radius: 5px 0px 0px 5px; font-weight:bold; color:white; padding-top:0.01px; padding-bottom:0.01px; display:inline; border:0px; outline:none;">
-<p>Licence</p>
-</button>
-
-<button style="background-color:orange; border-radius: 0px 5px 5px 0px; font-weight:bold; color:white; padding-top:0.01px; padding-bottom:0.01px; display:inline; border:0px; outline:none;">
-<p>MIT</p>
-</button>
-  </div>
-  
-<!--GT Widget-->
-<div id="google_translate_element"></div>
-
 <script>
 function googleTranslateElementInit() {
         new google.translate.TranslateElement({pageLanguage: 'en', 
@@ -635,6 +678,8 @@ function googleTranslateElementInit() {
 <input type="button" value="Finnsoftware" style="margin-left:50%; padding-top:5px; padding-bottom:5px;background-color:white; border:0px; cursor:pointer;" onclick="window.open('https://www.finnsoftware.net');"/>
 <input type="button" value="Blog" style="padding-top:5px; padding-bottom:5px;background-color:white; border:0px;"/>
 <input type="button" value="Licence" style="padding-top:5px; padding-bottom:5px;background-color:white; border:0px; cursor:pointer;" onclick="window.open('https://github.com/flancast90/flancast90.github.io/blob/main/LICENSE');"/>
+<div style="display:inline; border:0px; cursor:pointer; position: absolute; right: 5px;" id="google_translate_element"></div>
+
 </footer>
 <!--END-->
 
@@ -645,6 +690,21 @@ function googleTranslateElementInit() {
                 ? window.location.origin + '/'
                 : window.location.protocol + '/' + window.location.host + '/';
                
+</script>
+<script>
+document.getElementById('hamburger-menu').addEventListener('click', function(){
+  document.getElementById('top-menu').style.display='block';
+  document.getElementById('canceler').style.display='block';
+  
+  document.getElementById('hamburger-menu').style.display='none';
+});
+document.getElementById('canceler').addEventListener('click',function(){
+  document.getElementById('canceler').style.display='none';
+  
+  document.getElementById('hamburger-menu').style.display='block';
+  
+  document.getElementById('top-menu').style.display='none';
+});
 </script>
 
 </body>
