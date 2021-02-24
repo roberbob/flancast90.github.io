@@ -144,7 +144,7 @@ document.getElementById('navig').innerHTML = '';
 <!--Avatar Log On w/ Google-->
 <!--Displayed Onsuccess-->
 <img id="logon" style="position:fixed; right:40px; top:20px; width:30px; height:30px; display:none;" src="https://tse2.mm.bing.net/th/id/OIP.il-z4LVivubSKPlBzX6kowHaHa?pid=Api&rs=1"/>
-<a style="cursor:pointer; color:#1890ff" id="logout" onclick="signOut();" style="position:fixed; right:32.5px; top:2px; display:none; font-size:12px;">Log Out</a>
+<a id="logout" onclick="signOut();" style="cursor:pointer; color:#1890ff; position:fixed; right:32.5px; top:2px; display:none; font-size:12px;">Log Out</a>
 <script>
   function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
