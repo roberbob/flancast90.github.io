@@ -178,6 +178,7 @@ function onSignIn(googleUser) {
 </script>
 
 <!--END Avatar-->
+
 <div id="top-menu" style="padding-bottom:10px; padding-top:10px; margin-left:5px; margin-right: 5px; display:none; text-align:center; background-color: white; margin-top:50px; box-shadow: 0 10px 10px #1890ff;">
 <p style="font-size:18px; border-bottom: 2px solid #c8ccd1; color: #1890ff;"><b>Quick Navigation</b></p>
 
@@ -273,7 +274,7 @@ counter++;
 }
 }
 
-if (window.innerWidth < 900 || screen.width<900){
+if (window.innerWidth < 700 || screen.width < 900){
 document.getElementById('hamburger-menu').style.display="block";
 document.getElementById('sidebar').style.display='none';
 document.getElementById('container').style.width="100%";
@@ -294,12 +295,14 @@ document.getElementById('container').style.width="100%";
 Finniky is a community-supported creation, and is not free to up-keep. We would support it if you could show your appreciation for us by a small donation. If each of our users donated just $1.25 to us this year, we would pass our yearly goal!
 
 </p></div>
+
 <button class="btn" id="articlebtn" style="display:inline;float:left;width:25%;cursor:pointer; height:5em;" onclick="location.reload(true);
 document.getElementById('articlebtn').disabled=true;
 document.getElementById('discussionbtn').disabled=false;
 document.getElementById('editbtn').disabled=false;
 document.getElementById('revisionbtn').disabled=false;
- document.getElementById('disqus_thread').style.display='none'; document.getElementById('editScr').style.display='none';"><p id="article">
+ document.getElementById('disqus_thread').style.display='none';
+document.getElementById('newScr').style.display='none'; document.getElementById('editScr').style.display='none';"><p id="article">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
   <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
   <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
@@ -313,6 +316,7 @@ document.getElementById('discussionbtn').disabled=false;
 document.getElementById('revisionbtn').disabled=false;
 document.getElementById('articlebtn').disabled=false;
 document.getElementById('text').style.display='none'; document.getElementById('disqus_thread').style.display='none'; document.getElementById('editScr').style.display='block'; document.getElementById('revisionScr').style.display='none';
+document.getElementById('newScr').style.display='none';
 var cou = 0;
 var nummm = document.getElementsByClassName('title').length;
 var mmat = (decodeURIComponent(window.location.href.split('?')[1]));
@@ -340,6 +344,7 @@ document.getElementById('editbtn').disabled=false;
 document.getElementById('articlebtn').disabled=false;
 document.getElementById('revisionScr').style.display='block';
 document.getElementById('editScr').style.display='none';
+document.getElementById('newScr').style.display='none';
 var winLoc = decodeURIComponent((window.location.href).split('?')[1].toLowerCase());
 document.getElementById('text').style.display='none';
 var hiddenleng = document.getElementsByClassName('inpRev').length;
@@ -382,12 +387,20 @@ document.getElementById('text').style.display='none';
 document.getElementById('disqus_thread').style.display='block';
 document.getElementById('editScr').style.display='none';
 document.getElementById('revisionScr').style.display='none';
+document.getElementById('newScr').style.display='none';
 
 "><p id="disqus">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
   <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
 </svg><b> Discussion</b>
 </p></button>
+
+<div id="unsaved-err" style="display:none; width:100%; padding-top:5px; padding-bottom:5px; background-color:salmon; border-radius:2px;">
+<svg style="color:red; display:inline;" xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg>
+<p style="color:red; font-style: italic; display:inline;">You have unsaved changes. Make sure to download this wiki before exiting!</p>
+</div>
 
 <div id="disqus_thread" style="display:none;">
 <center style='color: #1890ff;'><h2>Page Discussion</h2>
@@ -510,6 +523,9 @@ counts++;
 "
 >❌Cancel</button>
 <button id="confirm" onclick="
+//show save msg
+document.getElementById('unsaved-err').style.display='block';
+
 document.getElementById('text').style.display='block';
 document.getElementById('discussionbtn').disabled=false;
 document.getElementById('revisionbtn').disabled=false;
@@ -548,6 +564,51 @@ document.getElementsByClassName('revTXT')[hiddenlength].innerHTML = document.get
 
 "
 style="display:inline; width:45%;">✔️Confirm</button>
+</center>
+</div>
+
+<div id="newScr" style="display:none; background-color:lightgray; padding-top:7px; margin-left:10px; margin-right:10px; margin-top:20px; border-radius:5px 5px 0px 0px;">
+<center>
+<button id="Bold" style="display:inline;" onclick="
+wrapAsLinkB2()
+"
+>
+<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-bold" viewBox="0 0 16 16">
+  <path d="M8.21 13c2.106 0 3.412-1.087 3.412-2.823 0-1.306-.984-2.283-2.324-2.386v-.055a2.176 2.176 0 0 0 1.852-2.14c0-1.51-1.162-2.46-3.014-2.46H3.843V13H8.21zM5.908 4.674h1.696c.963 0 1.517.451 1.517 1.244 0 .834-.629 1.32-1.73 1.32H5.908V4.673zm0 6.788V8.598h1.73c1.217 0 1.88.492 1.88 1.415 0 .943-.643 1.449-1.832 1.449H5.907z"/>
+</svg>
+</button>
+<button id="Italic" style="display:inline;" onclick="wrapAsLinkI2()">
+<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-italic" viewBox="0 0 16 16">
+  <path d="M7.991 11.674L9.53 4.455c.123-.595.246-.71 1.347-.807l.11-.52H7.211l-.11.52c1.06.096 1.128.212 1.005.807L6.57 11.674c-.123.595-.246.71-1.346.806l-.11.52h3.774l.11-.52c-1.06-.095-1.129-.211-1.006-.806z"/>
+</svg>
+</button>
+<button id="Underline" style="display:inline;" onclick="wrapAsLinkU2()">
+<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-type-underline" viewBox="0 0 16 16">
+  <path d="M5.313 3.136h-1.23V9.54c0 2.105 1.47 3.623 3.917 3.623s3.917-1.518 3.917-3.623V3.136h-1.23v6.323c0 1.49-.978 2.57-2.687 2.57-1.709 0-2.687-1.08-2.687-2.57V3.136zM12.5 15h-9v-1h9v1z"/>
+</svg>
+</button>
+<button id="enter" style="display:inline;" onclick="typeInTextarea2('<br>');"><svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+</svg>
+</button>
+<button id="img" onclick="var imgsrc=prompt('Please enter a direct image URL'); typeInTextarea2('<img style=\'width:50%\' src=\''+imgsrc+'\'/>')" style="display:inline;"><svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+  <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+</svg></button>
+<button id="link" style="display:inline;" onclick="var URL=prompt('Enter the path to your link (URL)'); var label= prompt('Enter the text you would like your link to display'); typeInTextarea2(`<a href='`+URL+`'>`+label+`</a>`);">
+<svg xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
+  <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+  <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z"/>
+</svg>
+</button>
+
+<textarea placeholder="Page Title" spellcheck="false" style="width:98%" id="titleNew"></textarea>
+<textarea placeholder="Page Content" contenteditable="true" spellcheck="false" style="height: 80vh; width:98%;" id="newTXT">
+</textarea>
+
+<button id="cancel" style="display:inline; width:45%;">❌Cancel</button>
+<button id="confirmNew" style="display:inline; width:45%;">✔️Confirm</button>
+
 </center>
 </div>
 
@@ -614,7 +675,17 @@ This is a test Page
 
 <div>
 <a style="cursor:pointer;" onclick="var opener = window.location.href.split('?')[0]+'?main%20page';window.open(opener,'_self');">Main Page</a><br>
-<a href="">New Page</a><br>
+<a style="cursor:pointer;" onclick="
+document.getElementById('text').style.display='none'; 
+document.getElementById('newScr').style.display='block';
+document.getElementById('disqus_thread').style.display='none';
+document.getElementById('editScr').style.display='none';
+document.getElementById('revisionScr').style.display='none';
+document.getElementById('articlebtn').disabled=false;
+document.getElementById('editbtn').disabled=false;
+document.getElementById('revisionbtn').disabled=false;
+document.getElementById('discussionbtn').disabled=false;
+">New Page</a><br>
 <a style="cursor:pointer;" onclick="
 var lensforrand= parseInt(document.getElementsByClassName('title').length)-1;
 var randgen = Math.floor(Math.random()*lensforrand);
@@ -656,7 +727,8 @@ encodeURIComponent(text));
 
   document.body.removeChild(pom);
 }
-download('FinnikyWiki', document.getElementsByTagName('html')[0].innerHTML)
+download('FinnikyWiki', document.getElementsByTagName('html')[0].innerHTML);
+document.getElementById('unsaved-err').style.display='none';
 ">Download this Finniky</a><br>
 <a href="https://www.finnsoftware.net/wikiprogram-home/our-dev-team">About Us</a><br>
 <a href="https://www.finnsoftware.net/wikiprogram-home/contact">Contact</a><br>
