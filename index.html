@@ -390,6 +390,14 @@ document.getElementById('newScr').style.display='none';
 </svg>
 <p style="color:red; font-style: italic; display:inline;">You have unsaved changes. Make sure to download this wiki before exiting!</p>
 </div>
+<div id="made" style="display:none; width:100%; padding-top:5px; padding-bottom:5px; background-color:#FFFFCC; border-radius:2px;">
+<svg style="color:yellow; display:inline;" xmlns="https://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg>
+<p style="color:yellow; font-style: italic; display:inline;">Your new page is added <a style="cursor:pointer;" onclick="
+var countnum=parseInt(document.getElementsByClassName('con').length)-1; window.open(window.location.href.split('?')[0]+'?'+document.getElementsByClassName('title')[countnum].innerHTML,'_self');
+">here</a></p>
+</div>
 
 <div id="disqus_thread" style="display:none;">
 <center style='color: #1890ff;'><h2>Page Discussion</h2>
@@ -447,6 +455,41 @@ function wrapAsLinkI(url){
   textarea.value.substring(end,len);
 }
 function typeInTextarea(newText, el = document.getElementById('editTXT')) {
+  const [start, end] = [el.selectionStart, el.selectionEnd];
+  el.setRangeText(newText, start, end, 'select');
+}
+
+function wrapAsLinkB2(url){
+  var textarea = document.getElementById("newTXT");
+  var len = textarea.value.length;
+  var start = textarea.selectionStart;
+  var end = textarea.selectionEnd;
+  var sel = textarea.value.substring(start, end);
+  var replace = '<b>' + sel + '</b>';
+  textarea.value = textarea.value.substring(0,start) + replace +
+  textarea.value.substring(end,len);
+}
+function wrapAsLinkU2(url){
+  var textarea = document.getElementById("newTXT");
+  var len = textarea.value.length;
+  var start = textarea.selectionStart;
+  var end = textarea.selectionEnd;
+  var sel = textarea.value.substring(start, end);
+  var replace = '<u>' + sel + '</u>';
+  textarea.value = textarea.value.substring(0,start) + replace +
+  textarea.value.substring(end,len);
+}
+function wrapAsLinkI2(url){
+  var textarea = document.getElementById("newTXT");
+  var len = textarea.value.length;
+  var start = textarea.selectionStart;
+  var end = textarea.selectionEnd;
+  var sel = textarea.value.substring(start, end);
+  var replace = '<i>' + sel + '</i>';
+  textarea.value = textarea.value.substring(0,start) + replace +
+  textarea.value.substring(end,len);
+}
+function typeInTextarea2(newText, el = document.getElementById('newTXT')) {
   const [start, end] = [el.selectionStart, el.selectionEnd];
   el.setRangeText(newText, start, end, 'select');
 }
@@ -595,8 +638,34 @@ wrapAsLinkB2()
 <textarea placeholder="Page Content" contenteditable="true" spellcheck="false" style="height: 80vh; width:98%;" id="newTXT">
 </textarea>
 
-<button id="cancel" style="display:inline; width:45%;">❌Cancel</button>
-<button id="confirmNew" style="display:inline; width:45%;">✔️Confirm</button>
+<button id="cancelNew" onclick="
+document.getElementById('newScr').style.display='none';
+document.getElementById('editbtn').disabled=false;
+document.getElementById('revisionbtn').disabled=false;
+document.getElementById('articlebtn').disabled=true;
+document.getElementById('discussionbtn').disabled=false;
+
+//show article without page refresh
+document.getElementById('text').style.display='block';
+" 
+style="display:inline; width:45%;">❌Cancel</button>
+
+<button id="confirmNew" onclick="newest()" style="display:inline; width:45%;">✔️Confirm</button>
+<script>
+function newest(){
+var createP = document.createElement('p');
+createP.setAttribute('class','con');
+createP.setAttribute('style','display:none');
+document.getElementById('text').appendChild(createP);
+
+var countCon = parseInt(document.getElementsByClassName('con').length)-1;
+document.getElementsByClassName('con')[countCon].innerHTML=`
+<span class="title" onclick="window.open((window.location.href).split('?')[0]+'?'+(this.innerHTML).toLowerCase(), '_self');">`+document.getElementById('titleNew').value+`</span>`+document.getElementById('newTXT').value+``
+document.getElementById('newScr').style.display='none';
+document.getElementById('text').style.display='block';
+document.getElementById('made').style.display='block';
+}
+</script>
 
 </center>
 </div>
